@@ -99,8 +99,9 @@ class CourtCreateView(LoginRequiredMixin, View):
                 monthly_price=form.cleaned_data['monthly_price']
             )
             court.save()
-            court_image = CourtImage(court=court, image=form.cleaned_data['image'])
-            court_image.save()
+            if form.cleaned_data['image']:
+                court_image = CourtImage(court=court, image=form.cleaned_data['image'])
+                court_image.save()
             return redirect('court.get_by_id', id=court.id)
 
 
