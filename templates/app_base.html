@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'court.index' %}">Meufuti</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        {% if user.is_authenticated %}
+                            <li>
+                                <a class="nav-link" href="{% url 'user.reservation.index' %}">Minhas reservas</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{% url 'court.my' %}">Minhas quadras</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <div>
+                        {% if user.is_authenticated %}
+                            <span>{{ user.name }}</span>
+                            <form action="{% url 'logout' %}?next={{ request.get_full_path }}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-secondary">Sair</button>
+                            </form>
+                        {% else %}
+                            <a href="{% url 'login' %}?next={{ request.get_full_path }}"
+                               class="btn btn-primary">Entrar</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        {% block main %}
+        {% endblock %}
+    </main>
+{% endblock %}

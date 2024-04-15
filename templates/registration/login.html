@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} | Entrar{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        {% if form.errors %}
+            <p>Seu usuário ou senha não deram match. Por favor tente novamente.</p>
+        {% endif %}
+
+        {% if next %}
+            {% if user.is_authenticated %}
+                <p>Sua conta não tem acesso para esse página. Para prosseguir entre
+                    com outra conta.</p>
+            {% else %}
+                <p>Por favor entre para ver essa página</p>
+            {% endif %}
+        {% endif %}
+
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.username.id_for_label }}" class="form-label">Usuário</label>
+                <input type="text" class="form-control" id="{{ form.username.id_for_label }}"
+                       name="{{ form.username.html_name }}">
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.password.id_for_label }}" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="{{ form.password.id_for_label }}"
+                       name="{{ form.password.html_name }}">
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
+            <button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
+        <a href="{% url 'password_reset' %}">Perdeu a senha?</a></p>
+        <a href="{% url 'user.register' %}?next={{ next }}">Cadastrar</a></p>
+    </div>
+{% endblock %}

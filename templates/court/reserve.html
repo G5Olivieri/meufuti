@@ -1,0 +1,12 @@
+{% extends "app_base.html" %}
+
+{% block title %}{{ block.super }} | Reservar quadra {{ court.name }}{% endblock %}
+
+{% block main %}
+    <h1>Reservar quadra {{ court.name }}</h1>
+    <form action="{% url 'court.reserve' id=court.id %}" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Reservar">
+    </form>
+{% endblock %}

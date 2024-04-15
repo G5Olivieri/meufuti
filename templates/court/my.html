@@ -1,0 +1,24 @@
+{% extends "app_base.html" %}
+
+{% block title %}{{ block.super }} | Minhas quadras{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1>Minhas quadras</h1>
+        <a class="btn btn-secondary mb-3" href="{% url 'court.create' %}">Adicionar quadra</a>
+        <ul class="list-group">
+            {% for court in courts %}
+                <li class="list-group-item">
+                    <a href="{% url 'court.get_by_id' id=court.id %}" style="text-decoration: none; color: var(--bs-body-color)">
+                        {% if court.images.all %}
+                            <img height="200" width="300" src="{{ court.images.first.image.url }}"
+                                 alt="{{ court.name }}">
+                        {% endif %}
+                        <h2>{{ court.name }}</h2>
+                        <p>{{ court.street }}, {{ court.neighborhood }}, {{ court.city }}</p>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

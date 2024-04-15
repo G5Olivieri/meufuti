@@ -1,0 +1,38 @@
+{% extends "app_base.html" %}
+
+{% block title %}{{ block.super }} | Quadras {% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1>Quadras</h1>
+        <form class="d-flex mb-3" role="search">
+            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar"
+                   id="search-input"
+                   name="q">
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+        <ul class="list-group">
+            {% for court in courts %}
+                <li class="list-group-item" style="list-style: none">
+                    <a href="{% url 'court.get_by_id' id=court.id %}" style="color: var(--bs-body-color); text-decoration: none">
+                        <div class="container-fluid">
+                            <div class="row">
+                                {% if court.images.all %}
+                                    <div class="col-lg-3">
+                                        <img style="width: 100%" src="{{ court.images.first.image.url }}"
+                                             alt="{{ court.name }}">
+                                    </div>
+                                {% endif %}
+                                <div class="col-lg">
+                                    <h2>{{ court.name }}</h2>
+                                    <p>{{ court.street }}, {{ court.neighborhood }}, {{ court.city }}</p>
+                                    <p>{{ court.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

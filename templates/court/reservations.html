@@ -1,0 +1,14 @@
+{% extends "app_base.html" %}
+
+{% block title %}{{ block.super }} | Reservas para {{ court.name }}{% endblock %}
+
+{% block main %}
+    <h1>Reservas para {{ court.name }}</h1>
+    <ul>
+        {% for reservation in reservations %}
+            <li>
+                {{ reservation.date }} - {{ reservation.time }} {{ reservation.duration }} - {{ reservation.user.first_name }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
